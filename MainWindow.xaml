@@ -1,0 +1,92 @@
+﻿<Window x:Class="Crisant_FBManagement.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Crisant_FBManagement"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="780" Width="1280" UseLayoutRounding="True" WindowState="Maximized" WindowStyle="None" Background="White">
+
+    <Window.Resources>
+        <Style x:Key="placeHolder" TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <Grid>
+                            <TextBox Text="{Binding Path=Text,
+                                                RelativeSource={RelativeSource TemplatedParent}, 
+                                                Mode=TwoWay,
+                                                UpdateSourceTrigger=PropertyChanged}"
+                                 x:Name="textSource" 
+                                 Background="Transparent" 
+                                 Panel.ZIndex="2" />
+                            <TextBox Text="{TemplateBinding Tag}" Background="{TemplateBinding Background}" Panel.ZIndex="1">
+                                <TextBox.Style>
+                                    <Style TargetType="{x:Type TextBox}">
+                                        <Setter Property="Foreground" Value="Transparent"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Path=Text, Source={x:Reference textSource}}" Value="">
+                                                <Setter Property="Foreground" Value="Gray"/>
+                                                <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                                                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBox.Style>
+                            </TextBox>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Image x:Name="LogoImg" Source="/Images/rail museum-02.png"  Grid.RowSpan="2"   />
+        <Image Grid.Row="1" Grid.Column="1" Source="/Images/track_01.png"    Margin="0,0,30,0"   />
+        <Viewbox  StretchDirection="Both" HorizontalAlignment="Stretch" Grid.Column="2" Grid.Row="1">
+            <TextBlock x:Name="HeadetTxt" Text="Feedback Management" FontWeight="Bold" Foreground="#FFF3A414" />
+        </Viewbox>
+        <Image Grid.Row="1" Grid.Column="3" Source="/Images/track_01.png"  Margin="30,0,0,0"    />
+
+
+        <ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Disabled" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="5" >
+            <StackPanel Orientation="Vertical">
+            <Grid x:Name="UserInput" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition Width="250"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Mobile No:" HorizontalAlignment="Right" Margin="5" VerticalAlignment="Center"/>
+                    <TextBox x:Name="txtMobileNo" Height="30" Margin="5" Grid.Column="1" Style="{StaticResource placeHolder}" Tag="xxxxxxxxxx"/>
+                    <Button x:Name="btnGenerateOTP" Content="Get OTP" Width="100" Height="30" Grid.Column="2" HorizontalAlignment="Left" />
+                    <TextBlock Text="OTP:" HorizontalAlignment="Right" Margin="5" VerticalAlignment="Center" Grid.Row="1"/>
+                    <TextBox x:Name="txtOTP" Height="30" Margin="5" Grid.Column="1"  Grid.Row="1" Style="{StaticResource placeHolder}" Tag="xxxx" />
+                    <Button x:Name="btnValidateOTP" Content="Validate OTP" Width="100" Height="30" Grid.Column="2" HorizontalAlignment="Left"  Grid.Row="1"/>
+                </Grid>
+            </StackPanel>
+        </ScrollViewer>
+        
+        <Grid Grid.Row="3" Grid.ColumnSpan="5" >
+            <Image x:Name="BottomImg" Source="/Images/color_Strip.png" HorizontalAlignment="Stretch" Stretch="Fill"/>
+            <TextBlock x:Name="TxtBottom" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Foreground="White"/>
+        </Grid>
+    </Grid>
+</Window>

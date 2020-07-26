@@ -23,6 +23,17 @@ namespace Crisant_FBManagement
         public MainWindow()
         {
             InitializeComponent();
+            Loaded += MainWindow_Loaded;
+        }
+
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            txtMobileNo.KeyDown += TxtMobileNo_KeyDown;
+        }
+
+        private void TxtMobileNo_KeyDown(object sender, KeyEventArgs e)
+        {
+            e.Handled = true;
         }
     }
 }

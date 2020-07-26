@@ -4,40 +4,23 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Crisant_FBManagement"
+        xmlns:adorners="http://gu.se/Adorners"
+        xmlns:System_Windows_Controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit"
         mc:Ignorable="d"
         Title="MainWindow" Height="780" Width="1280" UseLayoutRounding="True" WindowState="Maximized" WindowStyle="None" Background="White">
 
     <Window.Resources>
-        <Style x:Key="placeHolder" TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type TextBox}">
-                        <Grid>
-                            <TextBox Text="{Binding Path=Text,
-                                                RelativeSource={RelativeSource TemplatedParent}, 
-                                                Mode=TwoWay,
-                                                UpdateSourceTrigger=PropertyChanged}"
-                                 x:Name="textSource" 
-                                 Background="Transparent" 
-                                 Panel.ZIndex="2" />
-                            <TextBox Text="{TemplateBinding Tag}" Background="{TemplateBinding Background}" Panel.ZIndex="1">
-                                <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}">
-                                        <Setter Property="Foreground" Value="Transparent"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Path=Text, Source={x:Reference textSource}}" Value="">
-                                                <Setter Property="Foreground" Value="Gray"/>
-                                                <Setter Property="HorizontalContentAlignment" Value="Left"/>
-                                                <Setter Property="VerticalContentAlignment" Value="Center"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBox.Style>
-                            </TextBox>
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
+        <Style x:Key="AdornerTextStyleCenter" TargetType="{x:Type TextBlock}">
+            <Setter Property="Foreground" Value="Gray" />
+            <Setter Property="Opacity" Value="1" />
+            <Setter Property="FontStyle" Value="Normal"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        <Style x:Key="AdornerTextStyleTop" TargetType="{x:Type TextBlock}">
+            <Setter Property="Foreground" Value="Gray" />
+            <Setter Property="Opacity" Value="1" />
+            <Setter Property="FontStyle" Value="Normal"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
         </Style>
     </Window.Resources>
     <Grid>
@@ -62,28 +45,70 @@
         <Image Grid.Row="1" Grid.Column="3" Source="/Images/track_01.png"  Margin="30,0,0,0"    />
 
 
-        <ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Disabled" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="5" >
+        <ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Disabled" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="5" Margin="0,35,0,0" >
             <StackPanel Orientation="Vertical">
-            <Grid x:Name="UserInput" >
+                <Grid x:Name="UserInput" >
                     <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
+                        <RowDefinition Height="80"/>
+                        <RowDefinition Height="80"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="150"/>
-                        <ColumnDefinition Width="250"/>
+                        <ColumnDefinition Width="300"/>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="*"/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Text="Mobile No:" HorizontalAlignment="Right" Margin="5" VerticalAlignment="Center"/>
-                    <TextBox x:Name="txtMobileNo" Height="30" Margin="5" Grid.Column="1" Style="{StaticResource placeHolder}" Tag="xxxxxxxxxx"/>
-                    <Button x:Name="btnGenerateOTP" Content="Get OTP" Width="100" Height="30" Grid.Column="2" HorizontalAlignment="Left" />
-                    <TextBlock Text="OTP:" HorizontalAlignment="Right" Margin="5" VerticalAlignment="Center" Grid.Row="1"/>
-                    <TextBox x:Name="txtOTP" Height="30" Margin="5" Grid.Column="1"  Grid.Row="1" Style="{StaticResource placeHolder}" Tag="xxxx" />
-                    <Button x:Name="btnValidateOTP" Content="Validate OTP" Width="100" Height="30" Grid.Column="2" HorizontalAlignment="Left"  Grid.Row="1"/>
+                    <TextBlock Text="Mobile No:" HorizontalAlignment="Right" Margin="5" VerticalAlignment="Center" FontSize="15"/>
+                    <TextBox x:Name="txtMobileNo" adorners:Watermark.Text="xxxxxxxxxx" Margin="5" Grid.Column="1" adorners:Watermark.TextStyle="{StaticResource AdornerTextStyleCenter}" Height="40"   FontSize="15" />
+                    <Button x:Name="btnGenerateOTP" Content="Get OTP" Width="100" Height="40" Grid.Column="2" HorizontalAlignment="Left" />
+                    <TextBlock Text="OTP:" HorizontalAlignment="Right" Margin="5" VerticalAlignment="Center" Grid.Row="1" Visibility="Hidden"/>
+                    <TextBox x:Name="txtOTP" Visibility="Hidden" Height="40" Margin="5" Grid.Column="1"  Grid.Row="1" adorners:Watermark.Text="xxxx" adorners:Watermark.TextStyle="{StaticResource AdornerTextStyleCenter}"  FontSize="15" />
+                    <Button x:Name="btnValidateOTP" Content="Validate OTP" Width="100" Height="40" Grid.Column="2" HorizontalAlignment="Left"  Grid.Row="1" Visibility="Hidden"/>
+                    <Button x:Name="btnResetValidation" Content="Reset" Width="100" Height="40" Grid.Column="3" Margin="4,0,0,0" HorizontalAlignment="Left"  Grid.Row="1" Visibility="Hidden"/>
+                </Grid>
+                <Grid x:Name="gdFeedBackMain" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="Visible">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="50"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                
+                    <Border BorderThickness="1" BorderBrush="Black" CornerRadius="10" Padding="2" Grid.ColumnSpan="2" Margin="15,0,15,0">
+                        <TextBox x:Name="txtUserName" Margin="10,0,0,0" adorners:Watermark.Text="User Name" adorners:Watermark.TextStyle="{StaticResource AdornerTextStyleCenter}" BorderThickness="0" FontSize="15"  />
+                    </Border>
+                    <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.ColumnSpan="2">
+                        <TextBlock Text="PLEASE RATE YOUR EXPERIANCE" FontSize="15" Margin="20,10,0,0" VerticalAlignment="Center" />
+                        <System_Windows_Controls:Rating x:Name="ratingFav"  VerticalAlignment="Center" Margin="20,10,0,0" Height="27" 
+                                         Width="100" HorizontalAlignment="Right" Foreground="GreenYellow" >
+                            <System_Windows_Controls:Rating.LayoutTransform>
+                                <ScaleTransform ScaleX="1.5" ScaleY="1.5"></ScaleTransform>
+                            </System_Windows_Controls:Rating.LayoutTransform>
+                            <System_Windows_Controls:RatingItem Content=""/>
+                            <System_Windows_Controls:RatingItem Content=""/>
+                            <System_Windows_Controls:RatingItem Content=""/>
+                            <System_Windows_Controls:RatingItem Content=""/>
+                            <System_Windows_Controls:RatingItem Content=""/>
+                        </System_Windows_Controls:Rating>
+                    </StackPanel>
+                    <Border BorderThickness="1" BorderBrush="Black" CornerRadius="10" Padding="2" Grid.Row="2" Grid.ColumnSpan="2" Margin="15,15,15,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                        <TextBox x:Name="txtUserCommnets"  Margin="10,15,15,15" FontSize="15" adorners:Watermark.Text="Please Write Here" adorners:Watermark.TextStyle="{StaticResource AdornerTextStyleTop}" BorderBrush="Transparent"  BorderThickness="0"  AcceptsReturn="True" AcceptsTab="True" TextWrapping="Wrap" HorizontalContentAlignment="Left" VerticalContentAlignment="Top"/>
+                    </Border>
+                    <Border BorderThickness="2" BorderBrush="Black" Background="Orange" Grid.Row="3" HorizontalAlignment="Right" CornerRadius="15" Margin="0,10,15,0">
+                        <Button x:Name="btnSaveFB" Content="SUBMIT" Width="100" BorderThickness="0" Background="Transparent" FontWeight="Bold" FontSize="15"/>
+                    </Border>
+                    <Border BorderThickness="2" BorderBrush="Black" Background="LightGray" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" CornerRadius="15" Margin="0,10,15,0">
+                        <Button x:Name="btnCancel" Content="CANCEL" Width="100" BorderThickness="0" Background="Transparent" FontWeight="Bold" FontSize="15"/>
+                    </Border>
                 </Grid>
             </StackPanel>
         </ScrollViewer>
-        
+
         <Grid Grid.Row="3" Grid.ColumnSpan="5" >
             <Image x:Name="BottomImg" Source="/Images/color_Strip.png" HorizontalAlignment="Stretch" Stretch="Fill"/>
             <TextBlock x:Name="TxtBottom" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Foreground="White"/>

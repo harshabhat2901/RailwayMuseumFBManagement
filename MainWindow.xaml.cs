@@ -120,20 +120,20 @@ namespace Crisant_FBManagement
         {
             bool success = true;
             //TODO: implement when we get URL
-            //string url = "";
-            //try
-            //{
+            string url = "https://2factor.in/API/R1/?module=TRANS_SMS&apikey=e20d8147-5338-44d6-a7de-8640d16d7a8c&to="+ txtMobileNo.Text+"&from=RAILMU&templatename=mysururailmuseumotp&var1="+ code;
+            try
+            {
 
-            //    using (WebClient client = new WebClient())
-            //    {
-            //        string response = client.DownloadString(url);
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show("Sending SMS Failed. Please try again!", "OTP Generation", MessageBoxButton.OK, MessageBoxImage.Error);
-            //    success = false;
-            //}
+                using (WebClient client = new WebClient())
+                {
+                    string response = client.DownloadString(url);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Sending SMS Failed. Please try again!", "OTP Generation", MessageBoxButton.OK, MessageBoxImage.Error);
+                success = false;
+            }
             return success;
         }
 
@@ -153,7 +153,7 @@ namespace Crisant_FBManagement
                     gdThankYou.Visibility = Visibility.Visible;
 
                     DispatcherTimer timer = new DispatcherTimer();
-                    timer.Interval = TimeSpan.FromSeconds(5);
+                    timer.Interval = TimeSpan.FromSeconds(10);
                     timer.Tick += timer_Tick;
                     timer.Start();
                 }

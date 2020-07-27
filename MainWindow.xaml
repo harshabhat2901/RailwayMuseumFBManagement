@@ -82,7 +82,7 @@
                              adorners:Watermark.TextStyle="{StaticResource AdornerTextStyleCenter}" Height="40" VerticalContentAlignment="Center"  FontSize="15" />
                     <Button x:Name="btnGenerateOTP" Content="Get OTP" Width="100" Height="40" Grid.Column="2" Click="btnGenerateOTP_Click"
                             HorizontalAlignment="Left" IsEnabled="False"  />
-                    <TextBlock x:Name="txtblkOTP" Text="OTP:" HorizontalAlignment="Right" Margin="5" VerticalAlignment="Center" Grid.Row="1" Visibility="Hidden"/>
+                    <TextBlock x:Name="txtblkOTP" Text="OTP:" FontSize="15" HorizontalAlignment="Right" Margin="5" VerticalAlignment="Center" Grid.Row="1" Visibility="Hidden"/>
                     <TextBox x:Name="txtOTP" Visibility="Hidden" Height="40" Margin="5" Grid.Column="1"  Grid.Row="1" TextChanged="txtOTP_TextChanged"  VerticalContentAlignment="Center"
                              adorners:Watermark.Text="xxxx" adorners:Watermark.TextStyle="{StaticResource AdornerTextStyleCenter}"  FontSize="15" />
                     <Button x:Name="btnValidateOTP" Content="Validate OTP" Width="100" Height="40" Grid.Column="2" Click="btnValidateOTP_Click"
@@ -134,9 +134,9 @@
                     </Border>
                 </Grid>
                 <Grid x:Name="gdThankYou" Visibility="Hidden">
-                    <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
-                        <TextBlock Text="THANK YOU FOR YOUR TIME." HorizontalAlignment="Center" FontSize="80"/>
-                        <TextBlock Text="VISIT US AGAIN." HorizontalAlignment="Center" FontSize="80"/>
+                    <StackPanel Orientation="Vertical" VerticalAlignment="Top" Margin="0,100,0,0" HorizontalAlignment="Center">
+                        <TextBlock Text="THANK YOU FOR YOUR TIME" HorizontalAlignment="Center" FontSize="80"/>
+                        <TextBlock Text="VISIT US AGAIN" HorizontalAlignment="Center" FontSize="80"/>
                     </StackPanel>
                 </Grid>
                
@@ -145,7 +145,7 @@
 
         <Grid Grid.Row="3" Grid.ColumnSpan="5" >
             <Image x:Name="BottomImg" Source="/Images/color_Strip.png" HorizontalAlignment="Stretch" Stretch="Fill"/>
-            <TextBlock x:Name="TxtBottom" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Foreground="White"/>
+            <TextBlock x:Name="TxtBottom" Text="DESIGNED AND DEVELOPPED BY SOUTH WESTERN RAILWAY,MYSURU DIVISION" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Foreground="White"/>
         </Grid>
     </Grid>
 </Window>

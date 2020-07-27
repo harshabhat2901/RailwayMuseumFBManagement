@@ -117,8 +117,11 @@
   <ItemGroup>
     <Resource Include="Images\rail museum-02.png" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Database\" />
+    <Content Include="Database\RM_FBManagement.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

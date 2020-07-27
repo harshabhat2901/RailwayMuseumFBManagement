@@ -108,7 +108,7 @@
                     </Border>
                     <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.ColumnSpan="2">
                         <TextBlock Text="PLEASE RATE YOUR EXPERIANCE" FontSize="15" Margin="20,10,0,0" VerticalAlignment="Center" />
-                        <System_Windows_Controls:Rating x:Name="ratingFav"  VerticalAlignment="Center" Margin="20,10,0,0" Height="27" 
+                        <System_Windows_Controls:Rating x:Name="cRating"  VerticalAlignment="Center" Margin="20,10,0,0" Height="27" 
                                          Width="100" HorizontalAlignment="Right" Foreground="GreenYellow" >
                             <System_Windows_Controls:Rating.LayoutTransform>
                                 <ScaleTransform ScaleX="1.5" ScaleY="1.5"></ScaleTransform>
@@ -133,6 +133,13 @@
                                 Style="{StaticResource StaticButton}" Click="btnCancel_Click"/>
                     </Border>
                 </Grid>
+                <Grid x:Name="gdThankYou" Visibility="Hidden">
+                    <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <TextBlock Text="THANK YOU FOR YOUR TIME." HorizontalAlignment="Center" FontSize="80"/>
+                        <TextBlock Text="VISIT US AGAIN." HorizontalAlignment="Center" FontSize="80"/>
+                    </StackPanel>
+                </Grid>
+               
             </StackPanel>
         </ScrollViewer>
 

@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SQLite;
 using System.Linq;
 using System.Net;
 using System.Security.Policy;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -15,6 +17,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace Crisant_FBManagement
 {
@@ -25,6 +28,7 @@ namespace Crisant_FBManagement
     {
         int generatedOTP = 0;
         Regex regex = new Regex("[^0-9]+");
+       
         public MainWindow()
         {
             InitializeComponent();
@@ -36,9 +40,12 @@ namespace Crisant_FBManagement
             txtMobileNo.PreviewTextInput += TxtMobileNo_PreviewTextInput;
             txtOTP.PreviewTextInput += TxtOTP_PreviewTextInput;
             brdComment.Height = gdMain.ActualHeight - 390;
-            
+            cRating.Value = 5;
+           
+            gdThankYou.Height = gdMain.ActualHeight - 180;
         }
 
+       
 
         private void TxtOTP_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
@@ -95,6 +102,7 @@ namespace Crisant_FBManagement
         {
             txtblkOTP.Visibility = btnValidateOTP.Visibility = btnResetValidation.Visibility=txtOTP.Visibility = Visibility.Hidden;
             txtMobileNo.Clear();
+            txtOTP.Clear();
             btnValidateOTP.IsEnabled = btnGenerateOTP.IsEnabled = false;
             txtMobileNo.IsEnabled  = true;
                 
@@ -131,7 +139,29 @@ namespace Crisant_FBManagement
 
         private void btnSaveFB_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                string connString = "Data Source=" + System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Database\RM_FBManagement.db;") + "Version=3;";
+                using (SQLiteConnection conn = new SQLiteConnection(connString))
+                {
+                    conn.Open();
+                    string command = "Insert into Feedback (UserName, UserMobNo, Userrating, UserComment, FeedBackDate) values('" + txtUserName.Text.Replace("'", "\"") + "', '" + txtMobileNo.Text + "', '" + cRating.Value + "', '" + txtUserCommnets.Text.Replace("'", "\"") + "', '" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "')";
+                    SQLiteCommand cmd = new SQLiteCommand(command, conn);
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+                    gdFeedBackMain.Visibility = Visibility.Collapsed;
+                    gdThankYou.Visibility = Visibility.Visible;
 
+                    DispatcherTimer timer = new DispatcherTimer();
+                    timer.Interval = TimeSpan.FromSeconds(5);
+                    timer.Tick += timer_Tick;
+                    timer.Start();
+                }
+            }
+            catch(Exception ex)
+            {
+
+            }
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
@@ -140,5 +170,18 @@ namespace Crisant_FBManagement
             gdFeedBackMain.Visibility = Visibility.Hidden;
             btnResetValidation_Click(null, null);
         }
+        void timer_Tick(object sender, EventArgs e)
+        {
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                txtUserName.Clear();
+                txtUserCommnets.Clear();
+                cRating.Value = 5;
+                gdThankYou.Visibility = Visibility.Hidden;
+                btnCancel_Click(null, null);
+                ((DispatcherTimer)sender).Stop();
+            }));
+        }
+       
     }
 }
